@@ -1,0 +1,19 @@
+.container {
+    width: 100%;
+    z-index: 999;
+    height: 80px;
+    max-height: 80px;
+    background-color: #fdfdfd;
+    position: absolute;
+}
+
+.logo {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 2.2rem;
+
+    span {
+        text-transform: uppercase;
+        font-weight: 200;
+    }
+}
