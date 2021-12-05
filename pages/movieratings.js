@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SliceBarChart from "../components/SliceBarChart/SliceBarChart";
+import SliceBarChart from "../components/Charts/SliceBarChart";
 import Layout from "../components/layout";
 import executeQuery from "../lib/db";
 import data from "../data/query.json";

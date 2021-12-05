@@ -1,9 +1,8 @@
 import React from "react";
 import * as d3 from "d3";
-
 import { useD3 } from "../../hooks/useD3";
 
-const SliceBarChart2 = ({ data, col1, col2, setHovered, setYear, setToggledPie, year }) => {
+const SliceBarChart = ({ data, col1, col2, setSelected, setX, setHovered }) => {
     const ref = useD3(
         (svg) => {
             const height = 500;
@@ -63,19 +62,31 @@ const SliceBarChart2 = ({ data, col1, col2, setHovered, setYear, setToggledPie, 
                 .attr("y", (d) => y1(d[col2]))
                 .attr("width", x.bandwidth())
                 .on("click", function clickMe(d, i) {
-                    setYear(i.year);
-                    setToggledPie(true);
+                    if (col1 === "year") {
+                        if (col2 !== "average_rank") {
+                            setSelected(i[col1]);
+                            setX("rank");
+                        } else {
+                            this.remove();
+
+                            setX("genre");
+                            setSelected("");
+                        }
+                    } else {
+                        setSelected(0);
+                        setX("year");
+                    }
                 })
-                // .on("mouseover", function (d, i) {
-                //     setHovered((prev) => {
-                //         return { year, M: i.M, F: i.F };
-                //     });
-                // })
-                // .on("mouseout", function (d, i) {
-                //     setHovered((prev) => {
-                //         return { year: -1, M: -1, F: -1 };
-                //     });
-                // })
+                .on("mouseover", function (d, i) {
+                    setHovered((prev) => {
+                        return { col1: i[col1], col2: i[col2] };
+                    });
+                })
+                .on("mouseout", function (d, i) {
+                    setHovered((prev) => {
+                        return { col1: 0, col2: 0 };
+                    });
+                })
                 .attr("height", (d) => 0)
                 .transition()
                 .duration(1000)
@@ -83,6 +94,7 @@ const SliceBarChart2 = ({ data, col1, col2, setHovered, setYear, setToggledPie, 
         },
         [data.length]
     );
+
     return (
         <svg
             ref={ref}
@@ -100,4 +112,4 @@ const SliceBarChart2 = ({ data, col1, col2, setHovered, setYear, setToggledPie, 
     );
 };
 
-export default SliceBarChart2;
+export default SliceBarChart;

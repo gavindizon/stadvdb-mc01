@@ -3,8 +3,8 @@ import Layout from "../components/layout";
 import CountUp from "react-countup";
 import executeQuery from "../lib/db";
 import data from "../data/query.json";
-import PieChart from "../components/SliceBarChart/PieChart";
-import SliceBarChart2 from "../components/SliceBarChart/SliceBarChart2";
+import PieChart from "../components/Charts/PieChart";
+import RollUpBarChart from "../components/Charts/RollUpBarChart";
 
 const Movies = ({ result }) => {
     const [year, setYear] = useState(2000);
@@ -68,7 +68,7 @@ const Movies = ({ result }) => {
                         {togglePie ? (
                             <PieChart data={parsedData} sum={peepSum} />
                         ) : (
-                            <SliceBarChart2
+                            <RollUpBarChart
                                 data={barData}
                                 col1={"year"}
                                 col2={"gender_count"}
@@ -93,7 +93,7 @@ const Movies = ({ result }) => {
                                         onChange={(e) => setYear(parseInt(e.target.value))}
                                         disabled={togglePie === false}
                                     >
-                                        {range(1890, 2007).map((item, key) => (
+                                        {range(1980, 2000).map((item, key) => (
                                             <option key={key} value={item}>
                                                 {item}
                                             </option>

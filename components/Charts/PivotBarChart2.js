@@ -2,7 +2,7 @@ import React from "react";
 import * as d3 from "d3";
 import { useD3 } from "../../hooks/useD3";
 
-const SliceBarChart = ({ data, col1, col2, setSelected, setX, setHovered }) => {
+const PivotBarChart2 = ({ data, col1, col2, setHovered, setX }) => {
     const ref = useD3(
         (svg) => {
             const height = 500;
@@ -61,15 +61,6 @@ const SliceBarChart = ({ data, col1, col2, setSelected, setX, setHovered }) => {
                 .attr("x", (d) => x(d[col1]))
                 .attr("y", (d) => y1(d[col2]))
                 .attr("width", x.bandwidth())
-                .on("click", function clickMe(d, i) {
-                    if (col1 === "year") {
-                        setSelected(i[col1]);
-                        setX("rank");
-                    } else {
-                        setSelected(0);
-                        setX("year");
-                    }
-                })
                 .on("mouseover", function (d, i) {
                     setHovered((prev) => {
                         return { col1: i[col1], col2: i[col2] };
@@ -97,6 +88,7 @@ const SliceBarChart = ({ data, col1, col2, setSelected, setX, setHovered }) => {
                 marginRight: "0px",
                 marginLeft: "0px",
             }}
+            onClick={() => setX("genre")}
         >
             <g className="plot-area" />
             <g className="x-axis" />
@@ -105,4 +97,4 @@ const SliceBarChart = ({ data, col1, col2, setSelected, setX, setHovered }) => {
     );
 };
 
-export default SliceBarChart;
+export default PivotBarChart2;
