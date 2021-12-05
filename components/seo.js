@@ -13,6 +13,7 @@ const SEO = ({ title, desc }) => {
                 href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;800&display=swap"
                 rel="stylesheet"
             ></link>
+            <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
         </Head>
     );
 };

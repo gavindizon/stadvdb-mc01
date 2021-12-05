@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Navigation.module.scss";
 import Link from "next/link";
 import { FaBars, FaHamburger, FaHome, FaTimes } from "react-icons/fa";
@@ -6,9 +6,11 @@ import { MdOutlineRecentActors } from "react-icons/md";
 import { GiDramaMasks, GiFilmStrip, GiHouse } from "react-icons/gi";
 
 const Navigation = () => {
+    const [toggle, setToggle] = useState(false);
+
     return (
         <nav className={`${styles.container} px-8 py-2 flex justify-start items-center`}>
-            <button>
+            <button onClick={() => setToggle(!toggle)}>
                 <FaBars size="32px" />
             </button>
             <Link href="/">
@@ -21,8 +23,12 @@ const Navigation = () => {
                     D<span>A</span>
                 </a>
             </Link>
-            <div className="bg-white h-full fixed left-0 top-0 w-80 z-50 transform transition-all py-12 px-4 shadow-md ">
-                <button className="absolute right-0 top-0 mr-2 mt-2">
+            <div
+                className={`bg-white h-full fixed ${
+                    toggle ? "left-0" : "-left-80"
+                }  top-0 w-80 z-50 transform transition-all py-12 px-4 shadow-md`}
+            >
+                <button className="absolute right-0 top-0 mr-2 mt-2" onClick={() => setToggle(false)}>
                     <FaTimes size="32px" />
                 </button>
                 <Link href="/">
@@ -39,17 +45,18 @@ const Navigation = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/actors">
+                        <Link href="/moviegender">
                             <a className="font-semibold text-lg flex justify-start items-end pb-2 ">
-                                <GiDramaMasks size="28px" className="mr-2" /> <span className="leading-4">Actors</span>
+                                <GiDramaMasks size="28px" className="mr-2" />{" "}
+                                <span className="leading-4">Movies & Gender</span>
                             </a>
                         </Link>
                     </li>
                     <li>
-                        <Link href="/actors">
+                        <Link href="/movieratings">
                             <a className="font-semibold text-lg flex justify-start items-end pb-2">
                                 <GiFilmStrip size="28px" className="mr-2" />
-                                <span className="leading-4">Movies</span>
+                                <span className="leading-4">Movies & Ratings</span>
                             </a>
                         </Link>
                     </li>

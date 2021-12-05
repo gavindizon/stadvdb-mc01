@@ -1,0 +1,26 @@
+{
+    "roll_up": {
+        "name": "Number of Male and Female Actors over the Years",
+        "query": "SELECT `year`, gender, count(gender) as gender_count FROM nwordtable GROUP BY `year`, gender with ROLLUP;",
+        "visualization": "pie_chart",
+        "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta eligendi magnam dolores! Quis qui necessitatibus cum sapiente debitis, perferendis vero animi impedit dolor modi exercitationem facere tempora, illo quidem soluta!"
+    },
+    "slice": {
+        "name": "Number of Actors per Movie, in between the years 1980 to 2000 with a rating of 5 and up",
+        "query": "SELECT  s.year, COUNT(s.movie_id) as count, s.rank  FROM nwordtable s WHERE s.year >= '1980' AND s.year <= '2000' AND s.rank >= 5 AND s.rank <= 10 GROUP BY s.year, s.rank WITH ROLLUP;",
+        "visualization": "Stacked_Bar",
+        "description": ""
+    },
+    "pivot": {
+        "name": "Average Rank of Each Genre from 1980 to 2000",
+        "query": "SELECT  DISTINCT s.genre, AVG(s.rank) AS Average Rank, s.year FROM startable2 s WHERE s.year >= 1980 AND s.year <=2000 GROUP BY s.year ,s.genre WITH ROLLUP ORDER BY s.year ASC;",
+        "visualization": "bar_graph",
+        "description": ""
+    },
+    "drill_down": {
+        "name": "Average Rank per decade from 1900-2000",
+        "query": "",
+        "visualization": "",
+        "description": ""
+    }
+}
