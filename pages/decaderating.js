@@ -1,52 +1,58 @@
 import React, { useState, useEffect } from "react";
-import SliceBarChart from "../components/Charts/SliceBarChart";
+import CountUp from "react-countup";
+import DrillDownBarChart from "../components/Charts/DrillDownBarChart";
 import Layout from "../components/layout";
 import executeQuery from "../lib/db";
 import data from "../data/query.json";
-import CountUp from "react-countup";
 
-const Actors = ({ result }) => {
-    const total = result.filter((item) => item.rank === null && item.year !== null);
-    const [barData, setBarData] = useState(total);
-    const [x, setX] = useState("year");
+const DecadeRating = ({ result }) => {
+    //console.log(result);
+
     const [select, setSelected] = useState(0);
     const [hovered, setHovered] = useState({ col1: 0, col2: 0 });
     const [max, setMax] = useState({ col1: -1, count: -1 });
     const [min, setMin] = useState({ col1: -1, count: -1 });
-    const [sum, setSum] = useState(0);
+
+    const [ave, setAve] = useState(
+        result.filter((item) => item.decade === null && item.year === null)[0].average_movie_rank
+    );
+    const decade = result.filter((item) => item.decade !== null && item.year === null);
+    const drillToYear = result.filter((item) => item.decade === select && item.year !== null);
+
+    const [barData, setBarData] = useState(decade);
+    const [x, setX] = useState("decade");
 
     useEffect(() => {
         if (select !== 0) {
-            setBarData(result.filter((item) => item.rank !== null && item.year === select));
+            setBarData(drillToYear);
+            setAve(result.filter((item) => item.decade === select && item.year === null)[0].average_movie_rank);
         } else {
-            setBarData(total);
+            setBarData(decade);
+            setAve(result.filter((item) => item.decade === null && item.year === null)[0].average_movie_rank);
         }
 
-        const counts = barData.map((item) => item.count);
+        const counts = barData.map((item) => item.average_movie_rank);
         const maxCnt = Math.max(...counts);
         const minCnt = Math.min(...counts);
 
         const maxInd = counts.indexOf(maxCnt);
         const minInd = counts.indexOf(minCnt);
 
-        setMax({ col1: barData[maxInd][x], count: barData[maxInd].count });
-        setMin({ col1: barData[minInd][x], count: barData[minInd].count });
-    }, [select, result, x]);
-    useEffect(() => {
-        setSum(barData.reduce((p, t) => p + t.count, 0));
-    }, [x]);
+        setMax({ col1: barData[maxInd][x], count: barData[maxInd].average_movie_rank });
+        setMin({ col1: barData[minInd][x], count: barData[minInd].average_movie_rank });
+    }, [select, x]);
 
     return (
-        <Layout active={1} title={"Movies & Ratings"}>
+        <Layout active={1} title={"Decades & Ratings"}>
             <section className="px-2 py-32 min-h-screen ">
-                <h2 className="font-semibold text-2xl mb-4 text-center">{data.slice.name}</h2>
-                <p className="text-base mx-16 mb-16 text-gray-600 text-center">{data.slice.description}</p>
+                <h2 className="font-semibold text-2xl mb-4 text-center">{data.drill_down.name}</h2>
+                <p className="text-base mx-16 mb-16 text-gray-600 text-center">{data.drill_down.description}</p>
                 <div className="flex w-full justify-item item-center">
                     <div className="relative ml-8">
-                        <SliceBarChart
+                        <DrillDownBarChart
                             data={barData}
                             col1={x}
-                            col2="count"
+                            col2="average_movie_rank"
                             setSelected={setSelected}
                             setX={setX}
                             setHovered={setHovered}
@@ -55,10 +61,8 @@ const Actors = ({ result }) => {
                     <div className="flex flex-wrap w-full justify-between h-80">
                         <div className="w-full bg-gray-50 rounded-md shadow-lg px-4 py-4 ">
                             <h3 className="text-xl font-semibold text-center">
-                                Viewing{" "}
-                                {select === 0
-                                    ? "Movie Counts per Year (1980-2000)"
-                                    : `Movie Counts for Each Rating in ${select}`}
+                                Viewing Average Ranking of Movies{" "}
+                                {select === 0 ? " over the Decade (1900-1990)" : `in ${select}`}
                             </h3>
                             <div className="mt-4 flex">
                                 <div className="w-1/2">
@@ -76,14 +80,10 @@ const Actors = ({ result }) => {
                                 {x} with Most Number of Movies
                             </h4>
                             <h3 className="text-4xl mt-2 font-light text-center">
-                                {select === 0 ? (
-                                    <CountUp start={0} end={max.col1} duration={1} />
-                                ) : (
-                                    <CountUp start={0} end={max.col1} decimal={"."} decimals={2} duration={1} />
-                                )}{" "}
+                                <CountUp start={0} end={max.col1} duration={1} />
                             </h3>
                             <p className="text-gray-500 text-center mt-4">
-                                with <CountUp start={0} end={max.count} duration={1} />
+                                with <CountUp start={0} end={max.count} decimal="." decimals={2} duration={1} />
                                 &nbsp;Movies
                             </p>
                         </div>
@@ -92,23 +92,20 @@ const Actors = ({ result }) => {
                                 {x} with Least Number of Movies
                             </h4>
                             <h3 className="text-4xl mt-2 font-light text-center">
-                                {select === 0 ? (
-                                    <CountUp start={0} end={min.col1} duration={1} />
-                                ) : (
-                                    <CountUp start={0} end={min.col1} decimal={"."} decimals={2} duration={1} />
-                                )}
+                                <CountUp start={0} end={min.col1} duration={1} />
                             </h3>
                             <p className="text-gray-500 text-center mt-4">
-                                with <CountUp start={0} end={min.count} duration={1} />
+                                with <CountUp start={0} end={min.count} decimal="." decimals={2} duration={1} />
                                 &nbsp;Movies
                             </p>
                         </div>
                         <div className="w-full  bg-gray-50 rounded-md shadow-lg mt-2 px-2 py-8">
                             <h4 className="text-sm font-semibold text-center capitalize">
-                                Total Number of Movies in {select === 0 ? "1980-2000" : select}
+                                Average Ranking of Movies{" "}
+                                {select === 0 ? "in the 20th century" : "in the decade " + select}
                             </h4>
                             <h3 className="text-4xl mt-2 font-light text-center">
-                                <CountUp start={0} end={sum} duration={1} />
+                                <CountUp start={0} end={ave} decimal={"."} decimals={2} duration={1} />
                             </h3>
                         </div>
                     </div>
@@ -118,12 +115,12 @@ const Actors = ({ result }) => {
     );
 };
 
-export default Actors;
+export default DecadeRating;
 
 export async function getStaticProps() {
     try {
         const getQuery = await executeQuery({
-            query: data.slice.query,
+            query: data.drill_down.query,
         });
         const result = JSON.parse(JSON.stringify(getQuery));
         return {

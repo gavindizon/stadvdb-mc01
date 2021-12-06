@@ -26,14 +26,11 @@ const PieChart = ({ data, sum }) => {
 
             const data_ready = pie(Object.entries(data));
 
-            console.log("DATA READY", data_ready);
+            //  console.log("DATA READY", data_ready);
 
             g.selectAll("whatever")
                 .data(data_ready)
                 .join("path")
-                .on("mouseover", function (d, i) {
-                    console.log(d, i);
-                })
                 .style("opacity", 0.1)
                 .transition()
                 .duration(1000)

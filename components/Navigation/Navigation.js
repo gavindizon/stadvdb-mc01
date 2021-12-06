@@ -3,6 +3,7 @@ import styles from "./Navigation.module.scss";
 import Link from "next/link";
 import { FaBars, FaHamburger, FaHome, FaTimes } from "react-icons/fa";
 import { MdOutlineRecentActors } from "react-icons/md";
+import { FcClapperboard, FcHome, FcPositiveDynamic, FcRatings, FcSelfie } from "react-icons/fc";
 import { GiDramaMasks, GiFilmStrip, GiHouse } from "react-icons/gi";
 
 const Navigation = () => {
@@ -40,23 +41,39 @@ const Navigation = () => {
                     <li>
                         <Link href="/">
                             <a className="font-semibold text-lg flex justify-start items-end pb-2 ">
-                                <FaHome size="28px" className="mr-2" /> <span className="leading-4">Home</span>
+                                <FcHome size="28px" className="mr-2" /> <span className="leading-4">Home</span>
                             </a>
                         </Link>
                     </li>
                     <li>
                         <Link href="/moviegender">
                             <a className="font-semibold text-lg flex justify-start items-end pb-2 ">
-                                <GiDramaMasks size="28px" className="mr-2" />{" "}
-                                <span className="leading-4">Movies & Gender</span>
+                                <FcSelfie size="28px" className="mr-2" />{" "}
+                                <span className="leading-4">Gender & Roles</span>
                             </a>
                         </Link>
                     </li>
                     <li>
                         <Link href="/movieratings">
                             <a className="font-semibold text-lg flex justify-start items-end pb-2">
-                                <GiFilmStrip size="28px" className="mr-2" />
+                                <FcRatings size="28px" className="mr-2" />
                                 <span className="leading-4">Movies & Ratings</span>
+                            </a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/decaderating">
+                            <a className="font-semibold text-lg flex justify-start items-end pb-2">
+                                <FcPositiveDynamic size="28px" className="mr-2" />
+                                <span className="leading-4">Decades & Ratings</span>
+                            </a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="/moviegenre">
+                            <a className="font-semibold text-lg flex justify-start items-end pb-2">
+                                <FcClapperboard size="28px" className="mr-2" />
+                                <span className="leading-4">Genre & Ratings</span>
                             </a>
                         </Link>
                     </li>

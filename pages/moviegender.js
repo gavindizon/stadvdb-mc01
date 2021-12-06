@@ -25,9 +25,9 @@ const Movies = ({ result }) => {
     const [togglePie, setToggledPie] = useState(true);
 
     useEffect(() => {
-        console.log("TOTAL", total);
+        //console.log("TOTAL", total);
         setPieData(result.filter((item) => item.year === year && item.gender !== null));
-        console.log("PARSED", parsedData);
+        //console.log("PARSED", parsedData);
 
         // const counts = barData.map((item) => item.count);
         // const maxCnt = Math.max(...counts);
@@ -51,7 +51,7 @@ const Movies = ({ result }) => {
     }
 
     return (
-        <Layout active={1} title={"Movies"}>
+        <Layout active={1} title={"Gender & Roles"}>
             <section className="px-2 py-32 min-h-screen ">
                 <h2 className="font-semibold text-2xl mb-4 text-center">{data.roll_up.name}</h2>
                 <p className="text-base mx-16 mb-16 text-gray-600 text-center">{data.roll_up.description}</p>

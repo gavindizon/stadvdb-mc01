@@ -7,7 +7,7 @@ import PivotBarChart from "../components/Charts/PivotBarChart";
 import SliceBarChart from "../components/Charts/SliceBarChart";
 const MovieGenre = ({ result }) => {
     const [barData, setBarData] = useState(result.filter((item) => item.year === null && item.genre !== null));
-    console.log(barData);
+    //console.log(barData);
     const [x, setX] = useState("genre");
     const [selected, setSelected] = useState("");
     const [hovered, setHovered] = useState({ col1: "", col2: -1 });
@@ -32,8 +32,8 @@ const MovieGenre = ({ result }) => {
         const counts = barData.map((item) => {
             return item.average_rank || 0;
         });
-        console.log(counts);
-        console.log("COUNTS", counts);
+        //        console.log(counts);
+        //        console.log("COUNTS", counts);
         const maxCnt = Math.max(...counts);
         const minCnt = Math.min(...counts);
 
