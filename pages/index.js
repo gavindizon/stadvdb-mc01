@@ -31,7 +31,7 @@ export default function Home() {
                     <Link href="/moviegenre">
                         <a className="block w-full md:w-72 w-72 h-32 bg-gray-50 rounded-lg p-2 flex justify-center items-center shadow-lg m-2 transform transition-all hover:-translate-y-2">
                             <FcClapperboard size="64px" />
-                            <span className="text-2xl ml-4">Decades & Ratings</span>
+                            <span className="text-2xl ml-4">Genre & Ratings</span>
                         </a>
                     </Link>
                 </div>
