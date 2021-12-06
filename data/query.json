@@ -1,13 +1,13 @@
 {
     "roll_up": {
         "name": "Number of Male and Female Actors over the Years",
-        "query": "SELECT `year`, gender, count(gender) as gender_count FROM denormalized WHERE year >= 1980 AND year <= 2000 GROUP BY `year`, gender with ROLLUP;",
+        "query": "SELECT `year`, gender, count(gender) as gender_count FROM denormalized2 WHERE year >= 1980 AND year <= 2000 GROUP BY `year`, gender with ROLLUP;",
         "visualization": "pie_chart",
         "description": "This shows the number of male and female actors and the proportion of the genders in a particular year. It also shows the total roles played by actors and actresses."
     },
     "slice": {
         "name": "Number of Movies in the Years and Their Ratings",
-        "query": "SELECT  s.year, COUNT(s.movie_id) as count, s.rank  FROM denormalized s WHERE s.year >= '1980' AND s.year <= '2000' AND s.rank >= 5 AND s.rank <= 10 GROUP BY s.year, s.rank WITH ROLLUP;",
+        "query": "SELECT  s.year, COUNT(s.movie_id) as count, s.rank  FROM denormalized2 s WHERE s.year >= '1980' AND s.year <= '2000' AND s.rank >= 5 AND s.rank <= 10 GROUP BY s.year, s.rank WITH ROLLUP;",
         "visualization": "Stacked_Bar",
         "description": "The initial state of the data visualization shows the count of movies per year from 1980 to 2000. The year with the least and most amount of movies is displayed along with the total number of movies over the years. Performing the slice operation on the table will show the quantity of movies with a certain rating in a single year. The rank with the least and most number of films is also shown. Lastly, the total number of movies in a single year is displayed."
     },
@@ -19,8 +19,8 @@
     },
     "drill_down": {
         "name": "Average Rank per decade from 1900-2000",
-        "query": "SELECT 10*FLOOR(s.year/10) as decade, s.year , ROUND(AVG(s.rank), 2) AS `average_movie_rank` FROM denormalized s WHERE s.year >= '1900' AND s.year <= '1999' GROUP BY  10*FLOOR(s.year/10), s.year WITH ROLLUP;",
+        "query": "SELECT 10*FLOOR(s.year/10) as decade, s.year , ROUND(AVG(s.rank), 2) AS `average_movie_rank` FROM denormalized2 s WHERE s.year >= '1900' AND s.year <= '1999' GROUP BY  10*FLOOR(s.year/10), s.year WITH ROLLUP;",
         "visualization": "bar_graph",
-        "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat unde qui dicta iure! Placeat aperiam dolores, tempore sequi delectus quidem, distinctio minus quisquam nisi porro veniam vitae facilis eaque hic."
+        "description": "This displays the average movie rating of all the years in the selected decade. In addition, it will also show the year with the lowest and highest average rating, as well as the average rating of the selected decade."
     }
 }
